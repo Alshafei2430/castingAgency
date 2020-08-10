@@ -1,0 +1,427 @@
+{
+	"info": {
+		"_postman_id": "47f713f1-7c62-42bb-8046-d671ac1bac13",
+		"name": "casting_agency",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "assistant",
+			"item": [
+				{
+					"name": "assistant can view movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "12026453-b7a9-47f1-911c-6fd2e7a433be",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"success test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"pm.test(\"value contains movies array\", function () {",
+									"\tvar jsonData = pm.response.json();",
+									"    pm.expect(jsonData.movies).to.be.an('array');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"movies"
+							]
+						},
+						"description": "view actors in the database"
+					},
+					"response": []
+				},
+				{
+					"name": "assistant can view a specific actor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5dfba340-d4f0-48fc-9d8c-b87e1874f810",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"success test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/actors/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viewing an actor without authorization is forbidden",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "96c1aeda-59c0-4f15-bfa3-560ae1b76c28",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"success test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/actors/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"1"
+							]
+						},
+						"description": "view a specific actor"
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ilh2TWZuU3RNTnZaUC1ob2xCTUpDLSJ9.eyJpc3MiOiJodHRwczovL2Rldi0xMnRoeHI2aS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYwNzE4MWQ3MTQ2OGMwMDEzMDAwMzA1IiwiYXVkIjoiY2FzdGluZ19hZ2VuY3kiLCJpYXQiOjE1OTQzMzE3NTgsImV4cCI6MTU5NDQxODE1OCwiYXpwIjoiaEtLOUhFWmdWVExkd2JqWm83OHpJTHVVSXFpZ0o5VUoiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvciIsImdldDphY3RvcnMiLCJnZXQ6bW92aWUiLCJnZXQ6bW92aWVzIl19.c5rwb7e1fX7An5Kua159vUQnJfAic0rpl4VgqqzRN98IXA0VeNVYIGZnmYb4aK5s2Gdl9DIV-sE_VSaRx6MGqkwe8IfxDR7H5XNmNUqJrJF7l24OI7UkZsklc0y1HHWXdIwVgeRoNLhYqE1zuqO_Y5kUuS-xxEBHQrn35ve9uAM6K87GSB94HrJaJzQF2FEDAOXux-4gpAYy8iyou3gEB-5MCCCqtXtyjO8uJxyqL3a9NoycOBGwNhhBBnpME6RcW_H6yyOy-ND9jGI5gGsENukb2YzkUdABjv6OStdopUHEWIgj47w8jYN53d2GWw4Y2Q5foImLWu04SOj5AnMAcA",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "41a159dc-9a4f-4262-9cc4-f70c421a2f30",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "282b0296-1ccd-4637-84f5-1c2aa3a15eda",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "director",
+			"item": [
+				{
+					"name": "director can't remove a movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "907e3571-74dc-49ae-bc9f-c4d414a682f7",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"success test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/movies/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"movies",
+								"3"
+							]
+						},
+						"description": "delete a movie from the database"
+					},
+					"response": []
+				},
+				{
+					"name": "director can create an actor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c528c8c8-fea9-4d82-98e6-4f0f60cef39c",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"success test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"mohamed\",\n    \"age\": 25,\n    \"gender\": \"male\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/actors/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "director can remove an actor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "00c84cf1-724d-4dc5-9e8e-a913588b14be",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"success test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/actors/56",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"56"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ilh2TWZuU3RNTnZaUC1ob2xCTUpDLSJ9.eyJpc3MiOiJodHRwczovL2Rldi0xMnRoeHI2aS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYwNzE5MzNmZDMwZTIwMDEzNjY0YzFhIiwiYXVkIjoiY2FzdGluZ19hZ2VuY3kiLCJpYXQiOjE1OTQzMzE1NzcsImV4cCI6MTU5NDQxNzk3NywiYXpwIjoiaEtLOUhFWmdWVExkd2JqWm83OHpJTHVVSXFpZ0o5VUoiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvciIsImdldDphY3RvciIsImdldDphY3RvcnMiLCJnZXQ6bW92aWUiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3IiLCJwYXRjaDptb3ZpZSIsInBvc3Q6YWN0b3IiXX0.HzRhfPebLQcOSR1nH6BkQ99c_o4wlFwLMED3YEXrJyRhpZFKSQYb92XVe8ZjwwgsG3LabfF9YV5ekF_fUnn0-zKSvpvzkGLT_iDcDH978t82TXniImKBHWJb9i1iCGL1DnLAs7pYrLjnoJsMnC1AP-XdwmbC0vA_0sS6LnVB_PLEGlFErQNwQdB7poVyFItjVUEJDjqLCvDWyc5fFgCuPfl8AI-67YlkDOcPp6tjDa1yXbSi1C9OuuueK6tzt2kmC5NrfJm36PqHE4aJEhqOWJQW5_LlM5-cEhMfvA1hGAsJ98OMMPO3Zsy6sL6VTTIRquiq_rnhCN2exv9aygEJhA",
+						"type": "string"
+					}
+				]
+			},
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "executive producer",
+			"item": [
+				{
+					"name": "executive producer can create a movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "88045556-df74-4bea-b534-d1afae2c59a4",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"success test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"127\",\n    \"release_date\": \"2022-5-3\" \n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/movies/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"movies",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "executive producer can delete a movie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a46c310d-e4bb-4f93-8cbd-97360a8910c9",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"success test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/movies/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"movies",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ilh2TWZuU3RNTnZaUC1ob2xCTUpDLSJ9.eyJpc3MiOiJodHRwczovL2Rldi0xMnRoeHI2aS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYwNzExZWVmZDMwZTIwMDEzNjY0YmViIiwiYXVkIjoiY2FzdGluZ19hZ2VuY3kiLCJpYXQiOjE1OTQzMzE5NjQsImV4cCI6MTU5NDQxODM2NCwiYXpwIjoiaEtLOUhFWmdWVExkd2JqWm83OHpJTHVVSXFpZ0o5VUoiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvciIsImRlbGV0ZTptb3ZpZSIsImdldDphY3RvciIsImdldDphY3RvcnMiLCJnZXQ6bW92aWUiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3IiLCJwYXRjaDptb3ZpZSIsInBvc3Q6YWN0b3IiLCJwb3N0Om1vdmllIl19.p7ElWIYSzmbMzM-P0GfnxVM8gTcHd5xvdHdpI-xLbnTi1duF1MCfEpLvaSGJbvivwOhs4HdQrzoZgIpzwFLDuLnk89pF_SEfqLZoN5IbfS2u_yH1QeIYClAznWT2v4c65esINiLK2j7DgZf2GnovzYhZX5tctPPxLF-cfgE7vsgB7k7e5-azFmnItZO-4jzGyqo_fpRa8zr885G98rQqXv33Zf5AN2gxig6O0h0_-7Zlw9pGkBmY7ZMCBRijYX5WtffcPczCETL46K1PpPdHfPtGo8KJCv_dlPDrsDXbPnNM5L3BT2WfBmFQ3CpIgBXaNckqrW-ew2NFtx_VV2kleA",
+						"type": "string"
+					}
+				]
+			},
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ilh2TWZuU3RNTnZaUC1ob2xCTUpDLSJ9.eyJpc3MiOiJodHRwczovL2Rldi0xMnRoeHI2aS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYwNzE5MzNmZDMwZTIwMDEzNjY0YzFhIiwiYXVkIjoiY2FzdGluZ19hZ2VuY3kiLCJpYXQiOjE1OTQzMTIyMjksImV4cCI6MTU5NDMxOTQyOSwiYXpwIjoiaEtLOUhFWmdWVExkd2JqWm83OHpJTHVVSXFpZ0o5VUoiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvciIsImdldDphY3RvciIsImdldDphY3RvcnMiLCJnZXQ6bW92aWUiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3IiLCJwYXRjaDptb3ZpZSIsInBvc3Q6YWN0b3IiXX0.JJ2D63igO8RFj3lQUKIWR5E7LNhlCBR2Cz5dveCceXbw_ZHnZclV0OpV27leRRzaYf7DrFSuKMBxbOBaGi8xbGw1scV6IDFXWUugRa0__oSLg3K7xzvNL2umNL80wL-KiJ9DQJNLBwcj409P1_pXiHZw-CZBiSt1dKuOXkMmr3Mp57vF6Qi69xkf8TA1DTm_Y2b0IKtDd8TyKMjXfGpST29-JqUPih47cYUb38BAmqLpdkY7UIA3JMu8ExTCE5k-R1PEM1ifUZjAhBJ_3Ci-lrs7N9uoXuRdg-Nnc3CxX8bVcO-wErXhDLcrT774NnzT1dX6iuOazHSyi7eG9vhmbA",
+				"type": "string"
+			}
+		]
+	},
+	"protocolProfileBehavior": {}
+}
