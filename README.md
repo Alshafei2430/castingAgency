@@ -23,3 +23,8 @@ The Casting Agency models a company that is responsible for creating movies and 
     run "git commit -m "message" "
     run "heroku create"
     run "git push heroku master"
+
+# Live version
+
+the live version is hosted on heroku on the link below
+"https://hidden-basin-96158.herokuapp.com/"
